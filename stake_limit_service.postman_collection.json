@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "251ba024-30cf-4428-a5d0-ab2b7745a791",
+		"name": "stake_limit_service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Devices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/device",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"device"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change limit (to test validation)",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/stake-limit/change-limit?deviceId=f4f8e59a-bc2a-4784-b616-17a443992fd1&timeDuration=5&stakeLimit=0&hotAmountPctg=0&restrExpiry=-1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"stake-limit",
+						"change-limit"
+					],
+					"query": [
+						{
+							"key": "deviceId",
+							"value": "f4f8e59a-bc2a-4784-b616-17a443992fd1"
+						},
+						{
+							"key": "timeDuration",
+							"value": "5"
+						},
+						{
+							"key": "stakeLimit",
+							"value": "0"
+						},
+						{
+							"key": "hotAmountPctg",
+							"value": "0"
+						},
+						{
+							"key": "restrExpiry",
+							"value": "-1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Stake Limit",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Create Device/s",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"number\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/device/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"device",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add stake limit",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceId\": \"1f6a7678-4325-45f6-a0dd-807fd70f073d\",\r\n    \"timeDuration\": 1800,\r\n    \"stakeLimit\": 999,\r\n    \"hotAmountPctg\": 80,\r\n    \"restrExpiry\": 600\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/stake-limit/add-limit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"stake-limit",
+						"add-limit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change limit (valid)",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/stake-limit/change-limit?deviceId=055ce68b-921b-4620-89f9-38ec53f47793&timeDuration=1801&stakeLimit=1000&hotAmountPctg=81&restrExpiry=601",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"stake-limit",
+						"change-limit"
+					],
+					"query": [
+						{
+							"key": "deviceId",
+							"value": "055ce68b-921b-4620-89f9-38ec53f47793"
+						},
+						{
+							"key": "timeDuration",
+							"value": "1801"
+						},
+						{
+							"key": "stakeLimit",
+							"value": "1000"
+						},
+						{
+							"key": "hotAmountPctg",
+							"value": "81"
+						},
+						{
+							"key": "restrExpiry",
+							"value": "601"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create ticket",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceId\": \"799de2ee-13c2-40a1-8230-d7318de97925\",\r\n    \"stake\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/ticket-message/create-ticket",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"ticket-message",
+						"create-ticket"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
