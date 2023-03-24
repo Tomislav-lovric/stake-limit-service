@@ -14,6 +14,7 @@ import java.util.List;
 public class DeviceService {
 
     private final DeviceRepository repository;
+    //simple method for creating devices in db
     public String createDevices(Integer number) {
         List<Device> devices = new ArrayList<>();
         for (int i = 0; i < number; i++) {
@@ -23,6 +24,8 @@ public class DeviceService {
         return number + " devices created";
     }
 
+    //simple method for getting all devices in our db
+    //needed for getting deviceId which is used in all other services
     public List<DeviceResponse> getDevices() {
         return repository.findAll().stream()
                 .map(device -> DeviceResponse.builder()

@@ -28,6 +28,8 @@ public class Device {
     @Column(name = "blocked")
     private boolean blocked;
 
+    //default here is set to false if we want to change it we can use
+    //@ColumnDefault("true")
     @Column(name = "restriction_expires")
     private boolean restrictionExpires;
 

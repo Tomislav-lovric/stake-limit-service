@@ -23,16 +23,24 @@ public class StakeLimitService {
     private final DeviceRepository deviceRepository;
 
     public StakeLimitResponse getStakeLimit(String deviceId) {
+        //method for checking if provided deviceId is actually UUID (for more info
+        //check comments above isUuidValid method)
         UUID deviceUuid = isUuidValid(deviceId);
+        //then check if device by that id exists in our devices table
         if (!deviceRepository.existsById(deviceUuid)) {
+            //if it does not throw exp
             throw new DeviceNotFoundException("Device with " + deviceUuid + " id not found");
         }
+        //else check if that device contains stake limits
         if (!stakeLimitRepository.existsByDevice(deviceRepository.findDeviceById(deviceUuid))) {
+            //if not throw exp
             throw new StakeLimitNotFoundException("Stake limit with device " + deviceUuid + " id not found");
         }
 
+        //else get device and then get our stake limit using that device
         var device = deviceRepository.findDeviceById(deviceUuid);
         var stakeLimit = stakeLimitRepository.findByDevice(device);
+        //and finally build our response and return it to user
         return StakeLimitResponse.builder()
                 .timeDuration(stakeLimit.getTimeDuration())
                 .stakeLimit(stakeLimit.getStakeLimit())
@@ -42,6 +50,7 @@ public class StakeLimitService {
     }
 
     public StakeLimitResponse addStakeLimit(StakeLimitRequest request) {
+        //same as above
         UUID deviceId = isUuidValid(request.getDeviceId());
         //Could also make it if deviceId does not exist, create device with that id
         if (!deviceRepository.existsById(deviceId)) {
@@ -53,9 +62,12 @@ public class StakeLimitService {
             );
         }
         var device = deviceRepository.findDeviceById(deviceId);
-
+        //when all checks are completed we finally check if restriction is set to
+        //expire or not and set it to our device and save it to our db again
         device.setRestrictionExpires(request.getRestrExpiry() != 0);
+        deviceRepository.save(device);
 
+        //then we build our stake limit and save it to db
         var stakeLimit = StakeLimit.builder()
                 .device(device)
                 .timeDuration(request.getTimeDuration())
@@ -65,6 +77,7 @@ public class StakeLimitService {
                 .build();
         stakeLimitRepository.save(stakeLimit);
 
+        //finally build our response and return it
         return StakeLimitResponse.builder()
                 .timeDuration(stakeLimit.getTimeDuration())
                 .stakeLimit(stakeLimit.getStakeLimit())
@@ -81,6 +94,7 @@ public class StakeLimitService {
             Integer hotAmountPctg,
             Integer restrExpiry
     ) {
+        //same checks as the above
         UUID deviceUuid = isUuidValid(deviceId);
         if (!deviceRepository.existsById(deviceUuid)) {
             throw new DeviceNotFoundException("Device with " + deviceUuid + " id not found");
@@ -91,6 +105,7 @@ public class StakeLimitService {
         var device = deviceRepository.findDeviceById(deviceUuid);
         var stakeLimitDB = stakeLimitRepository.findByDevice(device);
 
+        //then we check which fields user actually sent (decided to change) and change them
         if (timeDuration != null && !timeDuration.equals(stakeLimitDB.getTimeDuration())) {
             stakeLimitDB.setTimeDuration(timeDuration);
         }
@@ -115,6 +130,11 @@ public class StakeLimitService {
                 .build();
     }
 
+    //method used for checking if provided UUID is correct
+    //because I could not get custom validation to work properly I switched all requests
+    //to take String instead of pure UUID, and then i check if that String matches
+    //UUID pattern, if it does not match pattern throw custom exception else
+    //transform provided String into actual UUID
     private UUID isUuidValid(String uuid) {
         final String uuid_pattern = "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$";
 
