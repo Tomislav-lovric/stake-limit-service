@@ -62,9 +62,11 @@ public class TicketMessageService {
         //get device
         var device = deviceRepository.findDeviceById(deviceUuid);
 
-        //check if device is blocked and restriction has not expired
-        if (device.isBlocked() && device.getRestrictionExpiresAt().isAfter(now)) {
-            //if both our true throw exp
+        //check if device is blocked and restriction does not expire or
+        // check if device is blocked and restriction has not expired
+        if ((device.isBlocked() && !device.isRestrictionExpires()) ||
+                (device.isBlocked() && device.getRestrictionExpiresAt().isAfter(now))) {
+            //if one of those (multi) conditions is true build and return our response
             return TicketMessageStatusResponse.builder().status("BLOCKED").build();
         }
         //else if device is not blocked or is blocked but restriction expired
@@ -87,9 +89,19 @@ public class TicketMessageService {
         if ((sumOfStakes + request.getStake()) >= stakeLimit.getStakeLimit()) {
             //if it does set blocked in our device to true
             device.setBlocked(true);
-            //todo fixe this
-            device.setRestrictionExpiresAt(now.plus(stakeLimit.getRestrExpiry(), ChronoUnit.SECONDS));
-            deviceRepository.save(device);
+            //then check if restriction expiry in our stake limit is set to 0
+            //(which means restriction does never expire)
+            if (stakeLimit.getRestrExpiry() == 0) {
+                //set restriction expires in our device to false
+                device.setRestrictionExpires(false);
+                //and save our device
+                deviceRepository.save(device);
+            } else {
+                //if restriction expiry is not 0 set restr expires at to now plus restr expiry
+                device.setRestrictionExpiresAt(now.plus(stakeLimit.getRestrExpiry(), ChronoUnit.SECONDS));
+                //and save our device
+                deviceRepository.save(device);
+            }
             //we don't build ticket here because it goes over allowed stake limit
             //we just block user and return msg with status BLOCKED
             return TicketMessageStatusResponse.builder().status("BLOCKED").build();
