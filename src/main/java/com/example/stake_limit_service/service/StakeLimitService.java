@@ -55,6 +55,7 @@ public class StakeLimitService {
         var device = deviceRepository.findDeviceById(deviceId);
 
         device.setRestrictionExpires(request.getRestrExpiry() != 0);
+        deviceRepository.save(device);
 
         var stakeLimit = StakeLimit.builder()
                 .device(device)

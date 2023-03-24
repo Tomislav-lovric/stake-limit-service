@@ -54,7 +54,8 @@ public class TicketMessageService {
         LocalDateTime now = LocalDateTime.now();
         var device = deviceRepository.findDeviceById(deviceUuid);
 
-        if (device.isBlocked() && device.getRestrictionExpiresAt().isAfter(now)) {
+        if ((device.isBlocked() && !device.isRestrictionExpires()) ||
+                (device.isBlocked() && device.getRestrictionExpiresAt().isAfter(now))) {
             return TicketMessageStatusResponse.builder().status("BLOCKED").build();
         }
         device.setBlocked(false);
@@ -69,8 +70,13 @@ public class TicketMessageService {
 
         if ((sumOfStakes + request.getStake()) >= stakeLimit.getStakeLimit()) {
             device.setBlocked(true);
-            device.setRestrictionExpiresAt(now.plus(stakeLimit.getRestrExpiry(), ChronoUnit.SECONDS));
-            deviceRepository.save(device);
+            if (stakeLimit.getRestrExpiry() == 0) {
+                device.setRestrictionExpires(false);
+                deviceRepository.save(device);
+            } else {
+                device.setRestrictionExpiresAt(now.plus(stakeLimit.getRestrExpiry(), ChronoUnit.SECONDS));
+                deviceRepository.save(device);
+            }
             //we don't build ticket here because it goes over allowed stake limit
             //we just block user and return msg with status BLOCKED
             return TicketMessageStatusResponse.builder().status("BLOCKED").build();
