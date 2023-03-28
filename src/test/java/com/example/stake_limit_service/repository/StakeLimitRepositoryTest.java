@@ -27,7 +27,7 @@ class StakeLimitRepositoryTest {
     }
 
     @Test
-    void StakeLimitRepository_existsByDevice_ReturnTrue() {
+    void testExistsByDeviceShouldReturnTrue() {
         // given
         Device device = new Device();
         deviceRepository.save(device);
@@ -49,7 +49,7 @@ class StakeLimitRepositoryTest {
     }
 
     @Test
-    void StakeLimitRepository_existsByDevice_ReturnFalse() {
+    void testExistsByDeviceShouldReturnFalse() {
         // given
         Device device = new Device();
         deviceRepository.save(device);
@@ -62,7 +62,7 @@ class StakeLimitRepositoryTest {
     }
 
     @Test
-    void StakeLimitRepository_findByDevice_ReturnStakeLimit() {
+    void testFindByDeviceShouldReturnStakeLimit() {
         // given
         Device device = new Device();
         deviceRepository.save(device);

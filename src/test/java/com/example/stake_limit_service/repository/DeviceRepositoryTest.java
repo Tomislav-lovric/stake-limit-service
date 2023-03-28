@@ -23,7 +23,7 @@ class DeviceRepositoryTest {
     }
 
     @Test
-    void DeviceRepository_findDeviceById_ReturnDevice() {
+    void testFindDeviceByIdShouldReturnDevice() {
         // given
         Device device = new Device();
         deviceRepository.save(device);

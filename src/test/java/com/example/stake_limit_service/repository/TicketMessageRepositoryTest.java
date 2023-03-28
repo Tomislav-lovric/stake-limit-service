@@ -31,7 +31,7 @@ class TicketMessageRepositoryTest {
     }
 
     @Test
-    void TicketMessageRepository_findByDeviceAndCreatedAtBetween_ReturnTicketMessage() {
+    void testFindByDeviceAndCreatedAtBetweenShouldReturnTicketMessage() {
         // given
         Device device = new Device();
         deviceRepository.save(device);
