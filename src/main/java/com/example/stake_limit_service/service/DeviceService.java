@@ -14,13 +14,21 @@ import java.util.List;
 public class DeviceService {
 
     private final DeviceRepository repository;
-    public String createDevices(Integer number) {
+    public List<DeviceResponse> createDevices(Integer number) {
         List<Device> devices = new ArrayList<>();
         for (int i = 0; i < number; i++) {
             devices.add(new Device());
         }
         repository.saveAll(devices);
-        return number + " devices created";
+
+        return devices.stream()
+                .map(device -> DeviceResponse.builder()
+                        .id(device.getId())
+                        .blocked(device.isBlocked())
+                        .restrictionExpires(device.isRestrictionExpires())
+                        .restrictionExpiresAt(device.getRestrictionExpiresAt())
+                        .build())
+                .toList();
     }
 
     public List<DeviceResponse> getDevices() {
