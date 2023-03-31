@@ -4,7 +4,6 @@ import com.example.stake_limit_service.dto.DeviceRequest;
 import com.example.stake_limit_service.dto.DeviceResponse;
 import com.example.stake_limit_service.entity.Device;
 import com.example.stake_limit_service.service.DeviceService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,15 +33,13 @@ class DeviceControllerTest {
     private DeviceService deviceService;
 
     private static final String END_POINT_PATH = "/api/v1/device";
-    private Device device1;
-    private Device device2;
     private DeviceResponse deviceResponse1;
     private DeviceResponse deviceResponse2;
 
     @BeforeEach
     void setUp() {
-        device1 = new Device();
-        device2 = new Device();
+        Device device1 = new Device();
+        Device device2 = new Device();
         deviceResponse1 = DeviceResponse.builder()
                 .id(device1.getId())
                 .blocked(device1.isBlocked())
