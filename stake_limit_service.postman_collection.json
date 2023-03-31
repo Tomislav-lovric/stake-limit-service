@@ -32,7 +32,7 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/stake-limit/change-limit?deviceId=f4f8e59a-bc2a-4784-b616-17a443992fd1&timeDuration=5&stakeLimit=0&hotAmountPctg=0&restrExpiry=-1",
+					"raw": "http://localhost:8080/api/v1/stake-limit/change-limit?deviceId=b89e5b70-d045-41bd-894d-08e13b7704af&timeDuration=5&stakeLimit=0&hotAmountPctg=0&restrExpiry=-1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -47,7 +47,7 @@
 					"query": [
 						{
 							"key": "deviceId",
-							"value": "f4f8e59a-bc2a-4784-b616-17a443992fd1"
+							"value": "b89e5b70-d045-41bd-894d-08e13b7704af"
 						},
 						{
 							"key": "timeDuration",
@@ -74,7 +74,26 @@
 			"name": "Get Stake Limit",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/stake-limit?deviceId=c511eeff-b2fe-40f6-be56-5bee63301f03",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"stake-limit"
+					],
+					"query": [
+						{
+							"key": "deviceId",
+							"value": "c511eeff-b2fe-40f6-be56-5bee63301f03"
+						}
+					]
+				}
 			},
 			"response": []
 		},
@@ -116,7 +135,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"deviceId\": \"1f6a7678-4325-45f6-a0dd-807fd70f073d\",\r\n    \"timeDuration\": 1800,\r\n    \"stakeLimit\": 999,\r\n    \"hotAmountPctg\": 80,\r\n    \"restrExpiry\": 600\r\n}",
+					"raw": "{\r\n    \"deviceId\": \"b89e5b70-d045-41bd-894d-08e13b7704af\",\r\n    \"timeDuration\": 1800,\r\n    \"stakeLimit\": 999,\r\n    \"hotAmountPctg\": 80,\r\n    \"restrExpiry\": 600\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -146,7 +165,7 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/stake-limit/change-limit?deviceId=055ce68b-921b-4620-89f9-38ec53f47793&timeDuration=1801&stakeLimit=1000&hotAmountPctg=81&restrExpiry=601",
+					"raw": "http://localhost:8080/api/v1/stake-limit/change-limit?deviceId=b89e5b70-d045-41bd-894d-08e13b7704af&timeDuration=1801&stakeLimit=1000&hotAmountPctg=81&restrExpiry=601",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -161,7 +180,7 @@
 					"query": [
 						{
 							"key": "deviceId",
-							"value": "055ce68b-921b-4620-89f9-38ec53f47793"
+							"value": "b89e5b70-d045-41bd-894d-08e13b7704af"
 						},
 						{
 							"key": "timeDuration",
@@ -210,6 +229,28 @@
 						"v1",
 						"ticket-message",
 						"create-ticket"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Stake Limit (Path Var)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/stake-limit/b89e5b70-d045-41bd-894d-08e13b7704af",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"stake-limit",
+						"b89e5b70-d045-41bd-894d-08e13b7704af"
 					]
 				}
 			},
