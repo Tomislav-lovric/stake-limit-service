@@ -5,6 +5,7 @@ import com.example.stake_limit_service.dto.DeviceResponse;
 import com.example.stake_limit_service.service.DeviceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,8 @@ public class DeviceController {
 
     @PostMapping("/create")
     public ResponseEntity<List<DeviceResponse>> createDevices(@RequestBody @Valid DeviceRequest request) {
-        return ResponseEntity.ok(service.createDevices(request.getNumber()));
+//        return ResponseEntity.ok(service.createDevices(request.getNumber()));
+        // made it return 201 Created rather than 200 Ok
+        return new ResponseEntity<>(service.createDevices(request.getNumber()), HttpStatus.CREATED);
     }
 }
