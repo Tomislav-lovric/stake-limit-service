@@ -31,8 +31,6 @@ Open application folder using some java IDE (like intellij or eclipse) and run i
 ## Testing Endpoints
 There is postman collection file in main application folder which you can import and use to test different endpoints. Since most endpoints already contain id's you will need to change those when you create devices yourself
 
-## TODO Unit tests
-
 ## Authors
 
 * **Tomislav Lovrić** - [stake-limit-service](https://github.com/Tomislav-lovric/stake-limit-service)
