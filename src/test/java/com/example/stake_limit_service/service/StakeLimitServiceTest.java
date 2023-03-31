@@ -160,15 +160,11 @@ class StakeLimitServiceTest {
         double stakeLim = 1000.0;
         int hotAmntPerc = 81;
         int restExpiry = 601;
-        stakeLimit.setTimeDuration(timeDur);
-        stakeLimit.setStakeLimit(stakeLim);
-        stakeLimit.setHotAmountPctg(hotAmntPerc);
-        stakeLimit.setRestrExpiry(restExpiry);
 
         // when
         when(deviceRepository.existsById(device.getId())).thenReturn(true);
-        when(stakeLimitRepository.existsByDevice(device)).thenReturn(true);
         when(deviceRepository.findDeviceById(device.getId())).thenReturn(device);
+        when(stakeLimitRepository.existsByDevice(device)).thenReturn(true);
         when(stakeLimitRepository.findByDevice(device)).thenReturn(stakeLimit);
         when(stakeLimitRepository.save(any(StakeLimit.class))).thenReturn(stakeLimit);
 
