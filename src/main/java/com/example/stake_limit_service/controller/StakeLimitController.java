@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,16 +20,19 @@ public class StakeLimitController {
 
     private final StakeLimitService service;
 
-    @GetMapping
-    public ResponseEntity<StakeLimitResponse> getStakeLimit(@RequestParam String deviceId) {
+    //changed param to path var
+    @GetMapping("/{deviceId}")
+    public ResponseEntity<StakeLimitResponse> getStakeLimit(@PathVariable String deviceId) {
         return ResponseEntity.ok(service.getStakeLimit(deviceId));
     }
 
+    //changed status from 200 ok to 201 created
     @PostMapping("/add-limit")
     public ResponseEntity<StakeLimitResponse> addStakeLimit(
             @RequestBody @Valid StakeLimitRequest request
     ) {
-        return ResponseEntity.ok(service.addStakeLimit(request));
+//        return ResponseEntity.ok(service.addStakeLimit(request));
+        return new ResponseEntity<>(service.addStakeLimit(request), HttpStatus.CREATED);
     }
 
     //or use path variable

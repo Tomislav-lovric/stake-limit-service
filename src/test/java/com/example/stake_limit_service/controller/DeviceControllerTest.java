@@ -66,7 +66,10 @@ class DeviceControllerTest {
         mockMvc.perform(get(END_POINT_PATH)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(devices.get(0).getId()));
+                .andExpect(jsonPath("$[0].id").value(devices.get(0).getId()))
+                .andExpect(jsonPath("$[0].blocked").value(devices.get(0).isBlocked()))
+                .andExpect(jsonPath("$[0].restrictionExpires").value(devices.get(0).isRestrictionExpires()))
+                .andExpect(jsonPath("$[0].restrictionExpiresAt").value(devices.get(0).getRestrictionExpiresAt()));
 
     }
 
@@ -84,6 +87,9 @@ class DeviceControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(deviceRequest)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$[0].id").value(devices.get(0).getId()));
+                .andExpect(jsonPath("$[0].id").value(devices.get(0).getId()))
+                .andExpect(jsonPath("$[0].blocked").value(devices.get(0).isBlocked()))
+                .andExpect(jsonPath("$[0].restrictionExpires").value(devices.get(0).isRestrictionExpires()))
+                .andExpect(jsonPath("$[0].restrictionExpiresAt").value(devices.get(0).getRestrictionExpiresAt()));
     }
 }
